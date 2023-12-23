@@ -47,6 +47,8 @@ public class GameEngine {
                     board.putElement(coords);
                 }
                 currentTetromino = tetrominoFactory.createRandomTetromino();
+                Command removeRows = commandFactory.getRemoveRowsCommand(board);
+                removeRows.execute();
             }
             Command command = commandFactory.getMoveCommand(currentTetromino, 0, 1);
             command.execute();

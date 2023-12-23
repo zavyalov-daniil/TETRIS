@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 @Component
 public class TetrominoFactoryImpl implements TetrominoFactory {
     BoardView boardView;
@@ -23,7 +25,9 @@ public class TetrominoFactoryImpl implements TetrominoFactory {
 
     @Override
     public Tetromino createRandomTetromino() {
-        currentTetromino = new Tetromino(TetrominoType.LShape, 4, 0);
+        Random r = new Random();
+        int x = Math.abs(r.nextInt()) % 6 + 1;
+        currentTetromino = new Tetromino(TetrominoType.values()[x], 4, 0);
         boardView.update(currentTetromino.getCoordinates());
         currentTetromino.registerObserver(boardView);
         return currentTetromino;

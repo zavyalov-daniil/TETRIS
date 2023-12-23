@@ -4,6 +4,8 @@ import org.example.command.CollisionChecker;
 import org.example.command.Command;
 import org.example.command.commands.MoveCommand;
 import org.example.command.commands.MultiCommand;
+import org.example.command.commands.RemoveRowsCommand;
+import org.example.model.Board;
 import org.example.model.Tetromino;
 import org.springframework.stereotype.Component;
 
@@ -26,4 +28,11 @@ public class CommandFactoryImpl implements CommandFactory {
     public Command getDefaultCommand() {
         return new MultiCommand(new ArrayList<>());
     }
+
+    @Override
+    public Command getRemoveRowsCommand(Board board) {
+        return new RemoveRowsCommand(board);
+    }
+
+
 }
