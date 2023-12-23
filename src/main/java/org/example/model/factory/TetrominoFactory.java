@@ -4,4 +4,5 @@ import org.example.model.Tetromino;
 
 public interface TetrominoFactory {
     Tetromino createRandomTetromino();
+    Tetromino getCurrent();
 }

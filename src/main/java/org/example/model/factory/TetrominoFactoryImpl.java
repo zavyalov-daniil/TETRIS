@@ -2,29 +2,37 @@ package org.example.model.factory;
 
 import org.example.model.Tetromino;
 import org.example.model.TetrominoType;
-import org.example.view.Board;
+import org.example.view.BoardView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TetrominoFactoryImpl implements TetrominoFactory {
-    Board board;
-    Tetromino tetromino;
+    BoardView boardView;
+    Tetromino currentTetromino;
 
     public TetrominoFactoryImpl() {
     }
 
     @Autowired
     @Lazy
-    public void setBoard(Board board) {
-        this.board = board;
-        tetromino = new Tetromino(TetrominoType.LShape, 4, 2);
+    public void setBoard(BoardView boardView) {
+        this.boardView = boardView;
+        currentTetromino = new Tetromino(TetrominoType.LShape, 4, 2);
     }
 
     @Override
     public Tetromino createRandomTetromino() {
-        tetromino.registerObserver(board);
-        return tetromino;
+        currentTetromino.registerObserver(boardView);
+        return currentTetromino;
+    }
+
+    @Override
+    public Tetromino getCurrent() {
+        if(currentTetromino == null) {
+            currentTetromino = createRandomTetromino();
+        }
+        return currentTetromino;
     }
 }

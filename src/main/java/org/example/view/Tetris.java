@@ -1,10 +1,5 @@
 package org.example.view;
 
-import org.example.Main;
-import org.example.controller.KeyController;
-import org.example.view.Board;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;

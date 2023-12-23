@@ -3,29 +3,25 @@ package org.example.view;
 import org.example.*;
 import org.example.controller.KeyController;
 import org.example.Observer;
-import org.example.model.Tetromino;
-import org.example.model.TetrominoType;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 @Component
-public class Board extends JPanel implements Observer {
+public class BoardView extends JPanel implements Observer {
     private JLabel statusBar;
     //private boolean[][] board;
     private HashSet<int[]> elements;
     private int[][] currentElement;
 
-    public Board(KeyController controller, Tetris parent) {
+    public BoardView(KeyController controller, Tetris parent) {
         setFocusable(true);
         statusBar = parent.getStatusBar();
         //board = new boolean[AppConstants.BOARD_WIDTH][AppConstants.BOARD_HEIGHT];
         addKeyListener(controller);
+        elements = new HashSet<>();
     }
 
     @Override
@@ -73,13 +69,15 @@ public class Board extends JPanel implements Observer {
         return (int) getSize().getWidth() / AppConstants.BOARD_WIDTH;
     }
 
-    public void setValue(int x, int y, boolean value) {
-        board[x][y] = value;
-    }
-
     @Override
     public void update(int[][] coordinates) {
         currentElement = coordinates;
+        repaint();
+    }
+
+    @Override
+    public void update(HashSet<int[]> elements) {
+        this.elements = elements;
         repaint();
     }
 }
