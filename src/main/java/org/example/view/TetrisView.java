@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 @Component
-public class Tetris extends JFrame {
+public class TetrisView extends JFrame {
 
     private JLabel statusBar;
 
-    public Tetris() {
+    public TetrisView() {
         statusBar = new JLabel(" 0");
         add(statusBar, BorderLayout.SOUTH);
         //board.repaint();

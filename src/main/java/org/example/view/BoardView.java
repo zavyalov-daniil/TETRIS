@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.*;
 import org.example.controller.KeyController;
 import org.example.Observer;
+import org.example.model.Board;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -12,16 +13,15 @@ import java.util.HashSet;
 @Component
 public class BoardView extends JPanel implements Observer {
     private JLabel statusBar;
-    //private boolean[][] board;
     private HashSet<int[]> elements;
     private int[][] currentElement;
 
-    public BoardView(KeyController controller, Tetris parent) {
+    public BoardView(KeyController controller, TetrisView parent, Board board) {
         setFocusable(true);
         statusBar = parent.getStatusBar();
-        //board = new boolean[AppConstants.BOARD_WIDTH][AppConstants.BOARD_HEIGHT];
         addKeyListener(controller);
-        elements = new HashSet<>();
+        //elements = new HashSet<>();
+        elements = board.getElements();
     }
 
     @Override
@@ -32,9 +32,8 @@ public class BoardView extends JPanel implements Observer {
         int boardTop = (int) size.getHeight() - AppConstants.BOARD_HEIGHT * squareHeight();
         //board[0][0] = true;
         //board[9][21] = true;
-        elements.add(new int[] { 0, 0 });
         for (int[] element : elements) {
-            drawSquare(g, element[0] * squareWidth(), boardTop + element[0] * squareHeight());
+            drawSquare(g, element[0] * squareWidth(), boardTop + element[1] * squareHeight());
         }
         if (currentElement != null) {
             for (int element = 0; element < 4; element++) {

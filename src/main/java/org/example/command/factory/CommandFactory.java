@@ -6,4 +6,6 @@ import org.springframework.stereotype.Component;
 
 public interface CommandFactory {
     Command getMoveCommand(Tetromino movable, int deltaX, int deltaY);
+
+    Command getDefaultCommand();
 }

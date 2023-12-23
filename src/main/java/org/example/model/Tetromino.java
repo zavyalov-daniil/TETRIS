@@ -10,6 +10,7 @@ public class Tetromino implements Observable {
     private final TetrominoType type;
     private int[][] coordinates;
     List<Observer> observers;
+    boolean isDropped;
 
     public Tetromino(TetrominoType type, int xOffset, int yOffset) {
         this.type = type;
@@ -19,6 +20,7 @@ public class Tetromino implements Observable {
             coordinates[element][1] = coordinates[element][1] + yOffset;
         }
         observers = new ArrayList<>();
+        isDropped = false;
     }
 
     public Tetromino(TetrominoType type, int xOffset, int yOffset, Observer observer) {
@@ -30,6 +32,7 @@ public class Tetromino implements Observable {
         }
         observers = new ArrayList<>();
         observers.add(observer);
+        isDropped = false;
     }
 
     public Tetromino(TetrominoType type, int xOffset, int yOffset, List<Observer> observers) {
@@ -40,6 +43,7 @@ public class Tetromino implements Observable {
             coordinates[element][1] = coordinates[element][1] + yOffset;
         }
         this.observers = observers;
+        isDropped = false;
     }
 
     public TetrominoType getType() {
@@ -65,5 +69,13 @@ public class Tetromino implements Observable {
         for(Observer observer : observers) {
             observer.update(coordinates);
         }
+    }
+
+    public boolean isDropped() {
+        return isDropped;
+    }
+
+    public void setDropped(boolean dropped) {
+        isDropped = dropped;
     }
 }

@@ -18,6 +18,16 @@ public class Board implements Observable {
     private final HashSet<int[]> elements = new HashSet<>();
     List<Observer> observers;
 
+    public Board() {
+        elements.add(new int[] { 0, 21 });
+        elements.add(new int[] { 9, 21 });
+        elements.add(new int[] { 8, 21 });
+        elements.add(new int[] { 7, 21 });
+        elements.add(new int[] { 6, 21 });
+        elements.add(new int[] { 5, 21 });
+        elements.add(new int[] { 4, 13 });
+    }
+
     @Autowired
     @Lazy
     public void setBoard(BoardView boardView) {
@@ -54,5 +64,10 @@ public class Board implements Observable {
             }
         }
         return false;
+    }
+
+    //TODO: delete it
+    public HashSet<int[]> getElements() {
+        return elements;
     }
 }

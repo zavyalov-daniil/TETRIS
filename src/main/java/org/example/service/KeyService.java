@@ -6,6 +6,8 @@ import org.example.model.factory.TetrominoFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.awt.event.KeyEvent;
+
 @Component
 @Scope(value = "singleton")
 public class KeyService {
@@ -19,8 +21,16 @@ public class KeyService {
 
 
     public void handleKeyEvent(int keycode) {
-        System.out.println("a");
-        Command command = commandFactory.getMoveCommand(tetrominoFactory.createRandomTetromino(), 0, 1);
+        Command command = null;
+        switch (keycode) {
+            case KeyEvent.VK_LEFT ->
+                    command = commandFactory.getMoveCommand(tetrominoFactory.getCurrent(), -1, 0);
+            case KeyEvent.VK_RIGHT ->
+                    command = commandFactory.getMoveCommand(tetrominoFactory.getCurrent(), 1, 0);
+            case KeyEvent.VK_DOWN ->
+                    command = commandFactory.getMoveCommand(tetrominoFactory.getCurrent(), 0, 1);
+            default -> commandFactory.getDefaultCommand();
+        }
         command.execute();
     }
 }

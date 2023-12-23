@@ -19,8 +19,6 @@ public class KeyController extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        System.out.println("key pressed");
-
         int keycode = e.getKeyCode();
 
         service.handleKeyEvent(keycode);

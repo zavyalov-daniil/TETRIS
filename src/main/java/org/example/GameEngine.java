@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.command.Command;
 import org.example.command.factory.CommandFactory;
+import org.example.model.Board;
 import org.example.model.Tetromino;
 import org.example.model.factory.TetrominoFactory;
 import org.example.model.factory.TetrominoFactoryImpl;
@@ -17,11 +18,13 @@ public class GameEngine {
     Timer timer;
     CommandFactory commandFactory;
     TetrominoFactory tetrominoFactory;
+    Board board;
 
-    public GameEngine(CommandFactory commandFactory) {
+    public GameEngine(CommandFactory commandFactory, Board board) {
         timer = new Timer();
         timer.scheduleAtFixedRate(new ScheduleTask(), AppConstants.DELAY, AppConstants.INTERVAL);
         this.commandFactory = commandFactory;
+        this.board = board;
     }
 
     @Autowired
@@ -38,7 +41,14 @@ public class GameEngine {
         }
 
         private void gameCycle() {
-            Command command = commandFactory.getMoveCommand(tetrominoFactory.getCurrent(), 0, 1);
+            Tetromino currentTetromino = tetrominoFactory.getCurrent();
+            if (currentTetromino.isDropped()) {
+                for (int[] coords : currentTetromino.getCoordinates()) {
+                    board.putElement(coords);
+                }
+                currentTetromino = tetrominoFactory.createRandomTetromino();
+            }
+            Command command = commandFactory.getMoveCommand(currentTetromino, 0, 1);
             command.execute();
 
         }
