@@ -10,17 +10,21 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 @Component
 public class Board extends JPanel implements Observer {
     private JLabel statusBar;
-    private boolean[][] board;
-    int[][] currentElement;
+    //private boolean[][] board;
+    private HashSet<int[]> elements;
+    private int[][] currentElement;
 
     public Board(KeyController controller, Tetris parent) {
         setFocusable(true);
         statusBar = parent.getStatusBar();
-        board = new boolean[AppConstants.BOARD_WIDTH][AppConstants.BOARD_HEIGHT];
+        //board = new boolean[AppConstants.BOARD_WIDTH][AppConstants.BOARD_HEIGHT];
         addKeyListener(controller);
     }
 
@@ -30,15 +34,11 @@ public class Board extends JPanel implements Observer {
         super.paintComponent(g);
         Dimension size = getSize();
         int boardTop = (int) size.getHeight() - AppConstants.BOARD_HEIGHT * squareHeight();
-        board[0][0] = true;
-        board[9][21] = true;
-        for (int x = 0; x < AppConstants.BOARD_WIDTH; ++x) {
-
-            for (int y = 0; y < AppConstants.BOARD_HEIGHT; ++y) {
-                if (board[x][y]) {
-                    drawSquare(g, x * squareWidth(), boardTop + y * squareHeight());
-                }
-            }
+        //board[0][0] = true;
+        //board[9][21] = true;
+        elements.add(new int[] { 0, 0 });
+        for (int[] element : elements) {
+            drawSquare(g, element[0] * squareWidth(), boardTop + element[0] * squareHeight());
         }
         if (currentElement != null) {
             for (int element = 0; element < 4; element++) {
